@@ -1,0 +1,15 @@
+#html, body{
+
+
+  background-color:black;
+
+
+}
+
+#body{
+    background-image: url("Portfolio\ PageSunandEarth.png");
+    height: 110vh;
+    background-size: cover;
+    background-position: center;
+    
+}

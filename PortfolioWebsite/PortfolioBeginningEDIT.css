@@ -1,0 +1,43 @@
+#html, body{
+  padding: 0;
+  margin: 0;
+
+  height: 100%;
+  color:black;
+}
+
+body{
+    background-image: url("Portfolio TitlePicture.png");
+    height: 110vh;
+    background-size: cover;
+    background-position: center;
+    
+}
+
+
+#side-content{
+    height: inherit;
+
+    place-content: end;
+    inline-size: max-content;
+    border: cyan;
+    border-radius: inherit;
+}
+
+#side-content a button{
+
+    padding: 30px;
+    color: rgb(0, 98, 255);
+    background-color: black;
+    border-radius: 6px;
+    border-color: rgb(0, 98, 255);
+    font-size: 16px;
+    
+}
+
+#side-content a button:hover{
+    transition:ease-in-out 0.3s;
+    border-radius: 15px;
+    border-color:rgb(77, 145, 255);
+}
+
