@@ -7,13 +7,26 @@
 }
 
 body{
-    background-image: url("Portfolio TitlePicture.png");
+      align-items: center;
+    display: flex;
+    background-color: black;
     height: 110vh;
+    justify-content: center;
     background-size: cover;
     background-position: center;
     
 }
 
+#main-content{
+    border-radius: 10px;
+    border-color: black;
+    border: 10px;
+         height: 1000px;
+    width: 1900px;
+    justify-items: anchor-center;
+    background-image: url("Portfolio TitlePicture.png");
+     
+}
 
 #side-content{
     height: inherit;
