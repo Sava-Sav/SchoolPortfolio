@@ -10,7 +10,7 @@ body{
       align-items: center;
     display: flex;
     background-color: black;
-    height: 110vh;
+    height: 65vh;
     justify-content: center;
     background-size: cover;
     background-position: center;
@@ -21,11 +21,22 @@ body{
     border-radius: 10px;
     border-color: black;
     border: 10px;
-         height: 1000px;
+    height: 1000px;
     width: 1900px;
     justify-items: anchor-center;
-    background-image: url("Portfolio TitlePicture.png");
+
      
+}
+
+.Center-Image{
+    position: fixed;
+    width: 990px;
+    height: 640;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    padding: 0;
+    margin: 0;
 }
 
 #side-content{
