@@ -18,7 +18,10 @@ addEventListener("keydown", (event) => {
         playerX += 5;
 })
 function update() {
-    //playerX = playerX + 5;
+   if ((playerX + (playerWidth/2)) >= 800)
+   {
+    playerX = 800 - playerWidth/2;
+   }
 
 context.clearRect(0, 0, 800, 600)
     
