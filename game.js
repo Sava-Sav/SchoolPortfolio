@@ -5,24 +5,33 @@ const context = canvas.getContext("2d")
 context.fillStyle = "#2A2C24" ;
 context.fillRect(0, 0, 800, 600);
 
-const playerWidth = 100;
+const playerWidth = 70;
 const playerHeight = 100;
-const playerColor = "green"
-let x = 400;
-let y = 300;
+const playerColor = "#0e005d";
+let playerX = 400;
+let playerY = 300;
 
+addEventListener("keydown", (event) => {
+    if (event.key === "a")
+        playerX -= 5;
+    if (event.key === "d")
+        playerX += 5;
+})
 function update() {
-    x = x + 5;
+    //playerX = playerX + 5;
 
-    context.clearRect(0, 0, 800, 600)
+context.clearRect(0, 0, 800, 600)
     
+context.fillStyle = "#ffffff";
+context.fillRect(0, 0, 800, 600);
+
 context.fillStyle = playerColor;
 context.fillRect(
-    x - (playerWidth / 2),
-    y - (playerHeight / 2),
-    playerWidth,
+    playerX, 
+    playerY, 
+    playerWidth, 
     playerHeight);
-    
+
 requestAnimationFrame(update);
 
 }
