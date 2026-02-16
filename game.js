@@ -3,6 +3,10 @@ const context = canvas.getContext("2d")
 
 const playerWidth = 70;
 const playerHeight = 100;
+
+const enemyWidth = 60;
+const enemyHeight = 70;
+
 const targetFPS = 60;
 
 let timeLast = 0;
@@ -10,7 +14,10 @@ let timeLast = 0;
 let playerX = 400;
 let playerY = 300;
 
-let playerSpeed = 5;
+let enemyX = 100;
+let enemyY = 100;
+
+let playerSpeed = 125;
 
 let buttonADown = false;
 let buttonDDown = false;
@@ -47,25 +54,26 @@ addEventListener("keyup", (event) => {
 
 function update(timeCurrent)
 {
-    const deltaTime = timeCurrent - timeLast;
-    const singleFrameTime = 1000 / targetFPS;
+    const deltaTime = (timeCurrent - timeLast) / 1000;
+    const singleFrameTime = (1000 / targetFPS) / 1000;
     if (deltaTime < singleFrameTime)
     {
-        console.log("Delaying");
+        requestAnimationFrame(update());
+        console.log("asdf")
         return;
     }
 
     if (buttonADown)
-        playerX -= playerSpeed;
+        playerX -= playerSpeed * deltaTime;
 
     if (buttonDDown)
-        playerX += playerSpeed;
+        playerX += playerSpeed * deltaTime;
 
     if (buttonWDown)
-        playerY -= playerSpeed;
+        playerY -= playerSpeed * deltaTime;
 
     if (buttonSDown)
-        playerY += playerSpeed;
+        playerY += playerSpeed * deltaTime;
 
     if ((playerX + (playerWidth/2)) >= canvas.width)
     {
@@ -95,10 +103,25 @@ function update(timeCurrent)
         playerWidth,
         playerHeight);
 
+   
+    context.fillStyle = "#ae0000";
+    context.fillRect(
+        enemyY - (enemyWidth  / 2),
+        enemyX - (enemyHeight / 2),
+        enemyWidth,
+        enemyHeight);
+
 
     timeLast = timeCurrent;
 
     requestAnimationFrame(update);
 }
+
+function enemySpawn(enemy)
+{
+
+}
+
+
 
 requestAnimationFrame(update);
