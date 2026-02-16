@@ -13,11 +13,17 @@ let timeLast = 0;
 
 let playerX = 400;
 let playerY = 300;
+let playerSpeed = 125;
 
 let enemyX = 100;
 let enemyY = 100;
+let enemySpeed = 125;
 
-let playerSpeed = 125;
+let bulletX = 100;
+let bulletY = 100;
+let bulletSpeed = 125;
+
+let bulletRequired = false;
 
 let buttonADown = false;
 let buttonDDown = false;
@@ -50,6 +56,9 @@ addEventListener("keyup", (event) => {
 
     if (event.key === "s")
         buttonSDown = false;
+
+    if (event.key === " ")
+        buttonSpaceDown = false;
 });
 
 function update(timeCurrent)
@@ -75,6 +84,9 @@ function update(timeCurrent)
     if (buttonSDown)
         playerY += playerSpeed * deltaTime;
 
+    if (buttonSpaceDown)
+        console.log("Pew");
+
     if ((playerX + (playerWidth/2)) >= canvas.width)
     {
         playerX = canvas.width - (playerWidth/2);
@@ -96,6 +108,20 @@ function update(timeCurrent)
     }
 
     context.clearRect(0, 0, canvas.width, canvas.height);
+    if(bulletRequired)
+    {
+        bulletX -= bulletSpeed * deltaTime
+    context.fillStyle = "black";
+    const bullet = new Path2D();
+    bullet.arc(
+        bulletX, 
+        bulletY, 
+        30, 
+        0, 
+        MathPI * 2)
+    context.fill(bullet);
+    }
+
     context.fillStyle = "#2A2C24";
     context.fillRect(
         playerX - (playerWidth  / 2),
@@ -116,12 +142,5 @@ function update(timeCurrent)
 
     requestAnimationFrame(update);
 }
-
-function enemySpawn(enemy)
-{
-
-}
-
-
 
 requestAnimationFrame(update);
