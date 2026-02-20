@@ -31,6 +31,21 @@ let buttonWDown = false;
 let buttonSDown = false;
 let buttonSpaceDown = false;
 
+class Entity
+{
+constructor(type, x, y, w, h, speed) 
+    {
+    this.type = type;
+    this.x = x;
+    this.y = y;
+    this.height = h;
+    this.width = w;
+    this.speed = speed;
+    }
+}
+
+const player = new Entity("player", 400, 300, 70, 100, 125);
+
 addEventListener("keydown", (event) => {
     if (event.key === "a")
         buttonADown = true;
@@ -128,7 +143,7 @@ function update(timeCurrent)
         bullet.arc(
             bulletX,
             bulletY,
-            30,
+            15,
             0,
             Math.PI * 2);
         context.fill(bullet);
