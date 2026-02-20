@@ -1,10 +1,10 @@
 const canvas = document.getElementById("gameCanvas");
-const context = canvas.getContext("2d")
+const context = canvas.getContext("2d");
 
-const playerWidth = 70;
+const playerWidth  = 70;
 const playerHeight = 100;
 
-const enemyWidth = 60;
+const enemyWidth  = 60;
 const enemyHeight = 70;
 
 const targetFPS = 60;
@@ -19,9 +19,9 @@ let enemyX = 100;
 let enemyY = 100;
 let enemySpeed = 125;
 
-let bulletX = 100;
-let bulletY = 100;
-let bulletSpeed = 125;
+let bulletX = 400;
+let bulletY = 300;
+let bulletSpeed = 500;
 
 let bulletRequired = false;
 
@@ -29,6 +29,7 @@ let buttonADown = false;
 let buttonDDown = false;
 let buttonWDown = false;
 let buttonSDown = false;
+let buttonSpaceDown = false;
 
 addEventListener("keydown", (event) => {
     if (event.key === "a")
@@ -42,6 +43,9 @@ addEventListener("keydown", (event) => {
 
     if (event.key === "s")
         buttonSDown = true;
+
+    if (event.key === " ")
+        buttonSpaceDown = true;
 });
 
 addEventListener("keyup", (event) => {
@@ -65,10 +69,12 @@ function update(timeCurrent)
 {
     const deltaTime = (timeCurrent - timeLast) / 1000;
     const singleFrameTime = (1000 / targetFPS) / 1000;
+
+    // console.log(`${deltaTime} < ${singleFrameTime}`);
+
     if (deltaTime < singleFrameTime)
     {
-        requestAnimationFrame(update());
-        console.log("asdf")
+        requestAnimationFrame(update);
         return;
     }
 
@@ -85,7 +91,11 @@ function update(timeCurrent)
         playerY += playerSpeed * deltaTime;
 
     if (buttonSpaceDown)
-        console.log("Pew");
+    {
+        bulletRequired = true;
+        bulletX = playerX;
+        bulletY = playerY
+    }
 
     if ((playerX + (playerWidth/2)) >= canvas.width)
     {
@@ -108,19 +118,28 @@ function update(timeCurrent)
     }
 
     context.clearRect(0, 0, canvas.width, canvas.height);
-    if(bulletRequired)
+
+    if (bulletRequired)
     {
-        bulletX -= bulletSpeed * deltaTime
-    context.fillStyle = "black";
-    const bullet = new Path2D();
-    bullet.arc(
-        bulletX, 
-        bulletY, 
-        30, 
-        0, 
-        MathPI * 2)
-    context.fill(bullet);
+        bulletX -= bulletSpeed * deltaTime;
+
+        context.fillStyle = "black";
+        const bullet = new Path2D();
+        bullet.arc(
+            bulletX,
+            bulletY,
+            30,
+            0,
+            Math.PI * 2);
+        context.fill(bullet);
     }
+
+    context.fillStyle = "red";
+    context.fillRect(
+        enemyX - (enemyWidth  / 2),
+        enemyY - (enemyHeight / 2),
+        enemyWidth,
+        enemyHeight);
 
     context.fillStyle = "#2A2C24";
     context.fillRect(
@@ -128,14 +147,6 @@ function update(timeCurrent)
         playerY - (playerHeight / 2),
         playerWidth,
         playerHeight);
-
-   
-    context.fillStyle = "#ae0000";
-    context.fillRect(
-        enemyY - (enemyWidth  / 2),
-        enemyX - (enemyHeight / 2),
-        enemyWidth,
-        enemyHeight);
 
 
     timeLast = timeCurrent;
