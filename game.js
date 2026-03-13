@@ -44,7 +44,25 @@ constructor(type, x, y, w, h, speed)
     }
 }
 
-const player = new Entity("player", 400, 300, 70, 100, 125);
+function move(dX, dY)
+{
+    this.x += dX;
+    this.y += dY;
+}
+
+const player = new Entity("player", 
+    playerX, 
+    playerY, 
+    playerWidth, 
+    playerHeight, 
+    playerSpeed);
+
+const enemy = new Entity("enemy", 
+    enemyX, 
+    enemyY, 
+    enemyWidth, 
+    enemyHeight, 
+    enemySpeed);
 
 addEventListener("keydown", (event) => {
     if (event.key === "a")
@@ -149,12 +167,18 @@ function update(timeCurrent)
         context.fill(bullet);
     }
 
+    for (entity of entities)
+    {
+       
+    }
+
     context.fillStyle = "red";
     context.fillRect(
         enemyX - (enemyWidth  / 2),
         enemyY - (enemyHeight / 2),
         enemyWidth,
         enemyHeight);
+    
 
     context.fillStyle = "#2A2C24";
     context.fillRect(
