@@ -1,4 +1,4 @@
-const canvas = document.getElementById("gameCanvas");
+const canvas = document.getElementById("game-canvas");
 const context = canvas.getContext("2d");
 
 const playerWidth  = 70;
@@ -33,36 +33,49 @@ let buttonSpaceDown = false;
 
 class Entity
 {
-constructor(type, x, y, w, h, speed) 
+    constructor(type, x, y, w, h, speed)
     {
-    this.type = type;
-    this.x = x;
-    this.y = y;
-    this.height = h;
-    this.width = w;
-    this.speed = speed;
+        this.type   = type;
+        this.x      = x;
+        this.y      = y;
+        this.height = h;
+        this.width  = w;
+        this.speed  = speed;
+    }
+
+    move(dX, dY)
+    {
+        this.x += dX;
+        this.y += dY;
     }
 }
 
-function move(dX, dY)
-{
-    this.x += dX;
-    this.y += dY;
-}
-
-const player = new Entity("player", 
-    playerX, 
-    playerY, 
-    playerWidth, 
-    playerHeight, 
+const player = new Entity(
+    "player",
+    playerX,
+    playerY,
+    playerWidth,
+    playerHeight,
     playerSpeed);
-
-const enemy = new Entity("enemy", 
-    enemyX, 
-    enemyY, 
-    enemyWidth, 
-    enemyHeight, 
+const enemy = new Entity(
+    "enemy",
+    enemyX,
+    enemyY,
+    enemyWidth,
+    enemyHeight,
     enemySpeed);
+
+const game_entities = [];
+game_entities.push(player);
+game_entities.push(enemy);
+game_entities.push(new Entity(
+    "enemy",
+    Math.random() * 100,
+    Math.random() * 100,
+    enemyWidth,
+    enemyHeight,
+    enemySpeed
+));
 
 addEventListener("keydown", (event) => {
     if (event.key === "a")
@@ -112,42 +125,42 @@ function update(timeCurrent)
     }
 
     if (buttonADown)
-        playerX -= playerSpeed * deltaTime;
+        player.move(-player.speed * deltaTime, 0);
 
     if (buttonDDown)
-        playerX += playerSpeed * deltaTime;
+        player.move(player.speed * deltaTime, 0);
 
     if (buttonWDown)
-        playerY -= playerSpeed * deltaTime;
+        player.move(0, -player.speed * deltaTime);
 
     if (buttonSDown)
-        playerY += playerSpeed * deltaTime;
+        player.move(0, player.speed * deltaTime);
 
     if (buttonSpaceDown)
     {
         bulletRequired = true;
-        bulletX = playerX;
-        bulletY = playerY
+        bulletX = player.x;
+        bulletY = player.y
     }
 
-    if ((playerX + (playerWidth/2)) >= canvas.width)
+    if ((player.x + (player.width / 2)) >= canvas.width)
     {
-        playerX = canvas.width - (playerWidth/2);
+        player.x = canvas.width - (player.width / 2);
     }
 
-    if ((playerX - (playerWidth/2)) < 0)
+    if ((player.x - (player.width / 2)) < 0)
     {
-        playerX = playerWidth/2;
+        player.x = player.width / 2;
     }
 
-    if ((playerY + (playerHeight/2)) >= canvas.height)
+    if ((player.y + (player.height / 2)) >= canvas.height)
     {
-        playerY = canvas.height - (playerHeight/2);
+        player.y = canvas.height - (player.height / 2);
     }
 
-    if ((playerY - (playerHeight/2)) < 0)
+    if ((player.y - (player.height / 2)) < 0)
     {
-        playerY = playerHeight/2;
+        player.y = player.height / 2;
     }
 
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -167,26 +180,19 @@ function update(timeCurrent)
         context.fill(bullet);
     }
 
-    for (entity of entities)
+    for (entity of game_entities)
     {
-       
+        if (entity.type === "player")
+            context.fillStyle = "#2A2C24";
+        else
+            context.fillStyle = "red";
+
+        context.fillRect(
+            entity.x - (entity.width  / 2),
+            entity.y - (entity.height / 2),
+            entity.width,
+            entity.height);
     }
-
-    context.fillStyle = "red";
-    context.fillRect(
-        enemyX - (enemyWidth  / 2),
-        enemyY - (enemyHeight / 2),
-        enemyWidth,
-        enemyHeight);
-    
-
-    context.fillStyle = "#2A2C24";
-    context.fillRect(
-        playerX - (playerWidth  / 2),
-        playerY - (playerHeight / 2),
-        playerWidth,
-        playerHeight);
-
 
     timeLast = timeCurrent;
 
