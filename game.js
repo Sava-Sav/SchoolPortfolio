@@ -186,7 +186,24 @@ function update(timeCurrent)
             context.fillStyle = "#2A2C24";
         else
             context.fillStyle = "red";
+            let dirX = player.x - entity.x;
+            let dirY = player.y - entity.y;
+ 
+            if (dirX > 1)
+                dirX = 1;
+            if (dirX < -1)
+                dirX = -1;
 
+            if (dirY > 1)
+                dirY = 1;
+            if (dirY < -1)
+                dirY = -1;
+
+            let stepX = dirX * entity.speed * deltaTime;
+            let stepY = dirY * entity.speed * deltaTime;
+            entity.x += stepX;
+            entity.y += stepY;
+        
         context.fillRect(
             entity.x - (entity.width  / 2),
             entity.y - (entity.height / 2),
