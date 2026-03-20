@@ -31,11 +31,34 @@ let buttonWDown = false;
 let buttonSDown = false;
 let buttonSpaceDown = false;
 
+class Vector2
+{
+    constructor(x, y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    static add(a,b)
+    {
+        var result = new Vector2(a.x + b.x, a.y + b.y);
+        return result;
+    }
+
+    static diff(a,b)
+    {
+        var result = new Vector2(a.x - b.x, a.y - b.y);
+        return result;
+    }
+
+}
+
 class Entity
 {
-    constructor(type, x, y, w, h, speed)
+    constructor(type, pos, x, y, w, h, speed)
     {
         this.type   = type;
+        this.position = pos;
         this.x      = x;
         this.y      = y;
         this.height = h;
@@ -43,10 +66,9 @@ class Entity
         this.speed  = speed;
     }
 
-    move(dX, dY)
+    move(step)
     {
-        this.x += dX;
-        this.y += dY;
+        Vector2.add(this.pos, step)
     }
 }
 
@@ -202,7 +224,7 @@ function update(timeCurrent)
             let stepX = dirX * entity.speed * deltaTime;
             let stepY = dirY * entity.speed * deltaTime;
             entity.x += stepX;
-            entity.y += stepY;
+            entity.y += stepY;  
         
         context.fillRect(
             entity.x - (entity.width  / 2),
