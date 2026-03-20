@@ -1,4 +1,4 @@
-const canvas = document.getElementById("game-canvas");
+const canvas = document.getElementById("gameCanvas");
 const context = canvas.getContext("2d");
 
 const playerWidth  = 70;
